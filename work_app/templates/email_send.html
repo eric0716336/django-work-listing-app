@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container pt-4">
+    <div class="alert alert-info">
+        <h2>Send Email</h2>
+    </div>
+
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <h5 class="red-alert">{{message}}</h5>
+        {% else %}
+            <h5 class="green-alert">{{message}}</h5>    
+        {% endif %}
+    {% endfor %}
+
+    <div class="p-4">    
+        <div class="jobs">    
+            <h4>{{job.position}}</h4>
+            <h4 class="jobs-right">{{job.company}}</h4>
+            <br>
+        
+            <div class="jobs-container">
+                <span>Salary: {{job.salary}}</span>
+                <span class="jobs-right">
+                    Contact Email: <a href="/email/{{job.id}}" title="Email">{{job.contact_email}}</a>
+                </span>
+            </div>
+
+            <p class="jobs-desc">{{job.description}}</p>
+
+        </div>
+    </div>
+
+    <div class="p-4">
+        <form action="/email-sent/{{job.id}}" method="POST">
+            {% csrf_token %}
+            <!-- {{form.as_p}} -->
+            <p>To:  {{job.contact_email}}</p>
+            <!-- <input type="text" name="subject"/> -->
+
+            <p>Subject: Job Inquery {{job.position}}</p>
+
+            <p>Body:</p>
+            <textarea name="body" rows="15" cols="100"></textarea><br>
+            
+            <input type="submit" value="Send Mail" class="btn btn-info">
+        </form>
+    </div>
+
+</div>
+{% endblock %}

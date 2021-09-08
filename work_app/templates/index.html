@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <div class="container pt-4">  
+
+      <div class="alert alert-info">
+        <h2>Job Listed</h2>
+      </div>
+
+      {% for message in messages %}
+        {% if message.tags == 'error' %}
+          <div class="alert alert-danger" role="alert">
+            {{message}}
+          </div>  
+        {% else %}
+          <div class="alert alert-success" role="alert">
+            {{message}}
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <div class="p-4">
+        {% for job in job_list %}
+        <div class="jobs"> 
+          <h4>{{job.position}}</h4>
+          <h4 class="jobs-right">{{job.company}}</h4>
+          <br>
+          <h4>By {{job.user}}</h4>
+          <br>
+        
+          <div class="jobs-container">
+            <span>Salary: {{job.salary}}</span>
+            <span class="jobs-right">
+              Contact Email: <a href="/email/{{job.id}}" title="Email">{{job.contact_email}}</a>
+            </span>
+          </div>
+          <p class="jobs-desc">{{job.description}}</p>
+          <!-- <a href="/delete-job/{{job.id}}" title="Delete" >delete</a> -->
+          <a href="/delete-job/{{job.id}}" title="Delete" data-toggle="modal" data-target="#exampleModal" >delete</a>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      Delete the job posted? 
+                  </div>
+                  <div class="modal-footer">
+                      <a type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                      <a type="button" class="btn btn-primary" href="/delete-job/{{job.id}}">Delete</a>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        {%endfor%}
+        
+      </div>
+
+      <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+      </button> -->
+
+    </div>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <div class="container pt-4">  
+        <div class="alert alert-info">
+            <h2>User Profile</h2>
+
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" role="alert">
+                        {{message}}
+                    </div>  
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                        {{message}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <div class="p-4">
+                <form action="/update-profile/" method="POST">
+                    {% csrf_token %}
+                    <p>Username: {{request.user}}</p>
+
+                    <p>Current Email: {{request.user.email}}</p>
+                    <p>Update Email: <input type="email" name="email" /></p>
+
+
+                    <p>Change password: <input type="password" name="password" /></p>
+                    <p>Repeat Password: <input type="password" name="password2" /></p>
+
+
+
+                    <input type="submit" value="Update" class="btn btn-info">
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

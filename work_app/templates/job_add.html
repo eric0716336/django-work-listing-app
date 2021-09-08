@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load rest_framework %}
+<div class="container pt-4">
+    <div class="alert alert-info">
+        <h2>Add Job Listing</h2>
+    </div>
+    <div class="p-4">
+        <form action="/confirm_add/" method="POST">
+        {% csrf_token %}
+        <!-- {{form.as_p}} -->
+        {% render_form serializer %}
+        <hr>
+        <input type="submit" value="ADD" class="btn btn-info">
+        </form>
+    </div>
+</div>
+{% endblock %}
+<!-- ['title','company', 'level' , 'salary', 'email', 'description'] -->
+<!-- # user  = models.ForeignKey(User, on_delete= models.CASCADE,null=False)
+    # title= models.CharField(max_length=100)
+    # level= models.CharField(max_length=30 , choices=level_choices)
+    # salary = models.CharField(max_length=50)
+    # description = models.TextField(null=True, blank=True)
+    # contact_email =models.CharField(max_length=50) -->
